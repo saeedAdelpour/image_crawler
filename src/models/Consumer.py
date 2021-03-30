@@ -8,7 +8,7 @@ class IConsumer(abc.ABC):
     pass
   
   @abc.abstractmethod
-  def consume_item(self, item):
+  def consume_item(self, **kwargs):
     pass
 
 
@@ -16,8 +16,9 @@ class IConsumer(abc.ABC):
 
 class Consumer(IConsumer):
 
-  def __init__(self, queue: queue.Queue):
+  def __init__(self, queue: queue.Queue, directory):
     self._queue = queue
+    self._directory = directory
 
   def consume(self):
     while True:
@@ -25,4 +26,4 @@ class Consumer(IConsumer):
       if item is None:
         break
       
-      self.consume_item(item)
+      self.consume_item(**item)
