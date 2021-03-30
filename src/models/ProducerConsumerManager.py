@@ -1,6 +1,6 @@
 from src.utils.functions import my_mkdir
-from src.models.producer import Producer
-from src.models.consumer import Consumer
+from src.models.Producer import Producer
+from src.models.Consumer import Consumer
 import queue
 
 
