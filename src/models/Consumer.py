@@ -1,10 +1,11 @@
 import abc
 import queue
+import logging
 
 class IConsumer(abc.ABC):
 
   @abc.abstractmethod
-  def consume(self, _queue):
+  def consume(self, thread_id):
     pass
   
   @abc.abstractmethod
@@ -20,10 +21,14 @@ class Consumer(IConsumer):
     self._queue = queue
     self._directory = directory
 
-  def consume(self):
+  def consume(self, thread_id):
     while True:
       item = self._queue.get()
       if item is None:
         break
       
       self.consume_item(**item)
+
+      logging.info('{} thread: {}, consume item: {}'.format(
+        self.__class__.__name__, thread_id, str(item)
+      ))

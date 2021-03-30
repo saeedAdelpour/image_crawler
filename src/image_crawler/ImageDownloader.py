@@ -4,7 +4,7 @@ from src.utils.functions import my_mkdir
 from src.models.Consumer import Consumer
 from src.models.Producer import Producer
 from src.models.ProducerConsumerManager import ProducerConsumerManager
-
+import logging
 
 
 class ImageDownloaderProducer(Producer):
@@ -21,7 +21,10 @@ class ImageDownloaderConsumer(Consumer):
       response = self._get_response(url)
       self._save_lg(img_directory, response)
     except Exception as err:
-      pass
+      logging.error('{}: error: {}, {}, product_id: {}'.format(
+        self.__class__.__name__, err, type(err), product_id)
+      )
+
 
   def _get_response(self, url):
     response = requests.get(url=url, stream=True)
